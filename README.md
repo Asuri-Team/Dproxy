@@ -45,16 +45,20 @@ python代理示例
 ![](15148945412589.png)
 
 在这种情况下，是无法动态分发请求的，依然需要每次动态设置代理。
+
 解决办法是，在代理服务器上，对HTTPS请求进行拆包，然后在分发到各个节点上去。
 这个过程中，由于HTTPS协议的一些特性，代理服务器使用了自签名证书，访问过程中会出现证书校验不通过的情况。
 
 ## 架构
 openresty v1.13.6.1
+
 nginx v1.12.2 (ngx_http_proxy_connect_module最高支持1.12版本)
+
 ngx_http_proxy_connect_module (Nginx天生不支持CONNECT请求，使用这个模块，可以使Nginx也能够处理CONNECT请求)
 
 其他：
 lua-resty-http （代理分发，实际上是由Nginx代替你，来完成后面的请求操作，再把结果原模原样返回给你，依赖于这个模块）
+
 lua-resty-dns （代理分发过程中，DNS由代理的最后一条负责解析，但是试验中，Nginx本地也会做一次解析，严重影响了代理分发的性能，所以在Nginx上强制关闭了DNS解析）
 
 ![](15148942971830.jpg)
