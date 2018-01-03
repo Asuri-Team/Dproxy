@@ -18,9 +18,9 @@ http://47.97.116.23:8080
 
 ## 使用方式：
 
-	$ curl 'http://myip.ipip.net' -x 'http://47.97.116.62:8080'
+	$ curl 'http://myip.ipip.net' -x 'http://47.97.116.23:8080'
 	
-	$ curl 'https://myip.ipip.net' -x 'http://47.97.116.62:8080' -k
+	$ curl 'https://myip.ipip.net' -x 'http://47.97.116.23:8080' -k
 
 注：curl中，-x表示设置代理，-k表示不验证证书
 
