@@ -1,7 +1,7 @@
 # Dproxy
 Massiva Distributed Dynamic Proxy
 
-##介绍
+## 介绍
 动态代理，也称拨号代理、动态VPS代理等等，特点是代理服务器的IP地址可以频繁变动。从IP维度上看，平均每个代理IP的有效期不超过5分钟。
 动态代理的一个重要问题是，IP地址平凡变动，在爬虫运行过程中，需要动态地对脚本中的代理进行设置。而且，某些情况下，不允许动态地对代理进行设置。
 比如E语言，默认是使用系统代理的，不可能每次都去修改。
@@ -12,11 +12,11 @@ Massiva Distributed Dynamic Proxy
 
 所以我们利用Openresty来做了一些改进，使得Nginx能够成为一款出色的代理分发工具。
 
-##Demo
+## Demo
 
 http://47.97.116.62:8080
 
-##使用方式：
+## 使用方式：
 
 	$ curl 'http://myip.ipip.net' -x 'http://47.97.116.62:8080'
 	
@@ -39,7 +39,7 @@ python代理示例
 	res = requests.get(url = "https://myip.ipip.net",proxies=proxy,verify=False).content
 	print res
 
-##特别说明
+## 特别说明
 
 在HTTPS的代理中，客户端发送的第一个请求为CONNECT请求，要求代理服务器，与目标站点建立HTTP Tunnel，然后在Tunnel中，客户端与目标站点直接对话。
 ![](media/15148915954937/15148945412589.png)
@@ -48,7 +48,7 @@ python代理示例
 解决办法是，在代理服务器上，对HTTPS请求进行拆包，然后在分发到各个节点上去。
 这个过程中，由于HTTPS协议的一些特性，代理服务器使用了自签名证书，访问过程中会出现证书校验不通过的情况。
 
-##架构
+## 架构
 openresty v1.13.6.1
 nginx v1.12.2 (ngx_http_proxy_connect_module最高支持1.12版本)
 ngx_http_proxy_connect_module (Nginx天生不支持CONNECT请求，使用这个模块，可以使Nginx也能够处理CONNECT请求)
