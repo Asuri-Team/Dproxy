@@ -1,5 +1,5 @@
 # Dproxy
-Massiva Distributed Dynamic Proxy
+Massive Distributed Dynamic Proxy
 
 ## 介绍
 动态代理，也称拨号代理、动态VPS代理等等，特点是代理服务器的IP地址可以频繁变动。从IP维度上看，平均每个代理IP的有效期不超过5分钟。
