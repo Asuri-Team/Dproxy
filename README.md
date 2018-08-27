@@ -69,7 +69,7 @@ lua-resty-dns （代理分发过程中，DNS由代理的最后一条负责解析
 
 整套系统的成本不到100块钱/月，主要的成本还是在动态IP的获取上，一个月下来，还是需要不少钱。
 
-##Update
+## Update
 
 1、重写resty-redis模块，使用长连接查询redis，大大减少Nginx和redis的tcp连接数
 
