@@ -14,13 +14,15 @@ Massive Distributed Dynamic Proxy
 
 ## Demo
 
-http://47.97.116.23:8080
+http://106.75.212.158:8080
+http://106.75.211.89:8080
+
 
 ## 使用方式：
 
-	$ curl 'http://myip.ipip.net' -x 'http://47.97.116.23:8080'
+	$ curl 'http://myip.ipip.net' -x 'http://106.75.211.89:8080'
 	
-	$ curl 'https://myip.ipip.net' -x 'http://47.97.116.23:8080' -k
+	$ curl 'https://myip.ipip.net' -x 'http://106.75.211.89:8080' -k
 
 注：curl中，-x表示设置代理，-k表示不验证证书
 
@@ -29,8 +31,8 @@ python代理示例
 	import requests
 
 	proxy={
-    	"http":"http://47.97.116.23:8080",
-    	"https":"http://47.97.116.23:8080"
+    	"http":"http://106.75.211.89:8080",
+    	"https":"http://106.75.211.89:8080"
 	}
 
 	res = requests.get(url = "http://myip.ipip.net",proxies=proxy).content
@@ -47,7 +49,8 @@ python代理示例
 在这种情况下，是无法动态分发请求的，依然需要每次动态设置代理。
 
 解决办法是，在代理服务器上，对HTTPS请求进行拆包，然后在分发到各个节点上去。
-这个过程中，由于HTTPS协议的一些特性，代理服务器使用了自签名证书，访问过程中会出现证书校验不通过的情况。
+
+这个过程中，由于HTTPS协议的一些特性，代理服务器使用了自签名证书，访问过程中会出现证书校验不通过的情况，请自行斟酌。
 
 ## 架构
 openresty v1.13.6.1
@@ -66,23 +69,13 @@ lua-resty-dns （代理分发过程中，DNS由代理的最后一条负责解析
 
 整套系统的成本不到100块钱/月，主要的成本还是在动态IP的获取上，一个月下来，还是需要不少钱。
 
-## TODO
+##Update
 
-实际试用过程中暴露出来的问题：
-每次接受一个代理请求，Ngx先请求代理池，获取到一个当前可用的代理IP。
-然后Ngx与代理IP建立Socket连接，再对请求进行适当重构，分发给代理IP。
+1、重写resty-redis模块，使用长连接查询redis，大大减少Nginx和redis的tcp连接数
 
-这个过程中：
-1、resty-redis模块，并没有很好的管理redis连接，每次请求，会产生一个新的连接去查询代理池，占用了大量TCP连接。
+2、代理池缓存风暴，修复周期性代理批量失效的问题。
 
-2、每次获取到一个代理IP后，与这个IP建立TCP连接，会消耗不少时间，造成约10%的连接超时，性能损失严重。
-
-后续优化：
-1、resty-redis改造，试用长连接，所有的代理IP查询，通过一个TCP连接来进行
-
-2、分离Proxy-connnect模块，预先获取到可用的代理IP，建立Socket connection pool，接受代理请求时，只要从连接池中获取一个稳定的connection进行转发即可。
-
-3、proxy-connect模块需要能够对代理IP的可用性进行判断，保证连接池中每一个连接都是可用的，每3分钟强制清理一次。
+3、增加备用节点
 
 
 
