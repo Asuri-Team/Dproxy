@@ -16,14 +16,14 @@ Massive Distributed Dynamic Proxy
 
 http://106.75.212.158:8080
 
-http://106.75.211.89:8080
+http://106.75.211.52:8080
 
 
 ## 使用方式：
 
-	$ curl 'http://myip.ipip.net' -x 'http://106.75.211.89:8080'
+	$ curl 'http://myip.ipip.net' -x 'http://106.75.211.52:8080'
 	
-	$ curl 'https://myip.ipip.net' -x 'http://106.75.211.89:8080' -k
+	$ curl 'https://myip.ipip.net' -x 'http://106.75.211.52:8080' -k
 
 注：curl中，-x表示设置代理，-k表示不验证证书
 
@@ -32,8 +32,8 @@ python代理示例
 	import requests
 
 	proxy={
-    	"http":"http://106.75.211.89:8080",
-    	"https":"http://106.75.211.89:8080"
+    	"http":"http://106.75.211.52:8080",
+    	"https":"http://106.75.211.52:8080"
 	}
 
 	res = requests.get(url = "http://myip.ipip.net",proxies=proxy).content
@@ -78,7 +78,7 @@ lua-resty-dns （代理分发过程中，DNS由代理的最后一条负责解析
 
 3、增加备用节点
 
-4、增加Socks5入口，使用 socks5://106.75.211.89:1080 即可使用
+4、增加Socks5入口，使用 socks5://106.75.211.52:1080 即可使用
 
 5、增加后端Socks5代理转发，代理池规模可以进一步扩大
 
